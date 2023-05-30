@@ -1,3 +1,25 @@
+server:
+  port: 8181
+
 spring:
   application:
     name: users
+  cloud:
+    config:
+      enabled: false
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/postgres?currentSchema=users"
+    username: postgres
+    password: mysecretpassword
+    hikari:
+      connection-init-sql: SET SEARCH_PATH TO users;
+  liquibase:
+    user: postgres
+    password: mysecretpassword
+    change-log: /liquibase/changelog.xml
+    url: "jdbc:postgresql://localhost:5432/postgres"
+    database-change-log-table: users_databaseChangeLog
+    database-change-log-lock-table: users_databaseChangeLogLock
+    parameters:
+      users.schemaName: users
+    liquibase-schema: public
